@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konfirmasi Jaringan PA 2026</title>
+    <title>Generator Konfirmasi JRS</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2563eb;
-            --bg: #f1f5f9;
+            --bg: #f8fafc;
             --card: #ffffff;
-            --text: #1e293b;
-            --border: #cbd5e1;
+            --text: #0f172a;
+            --border: #e2e8f0;
+            --muted: #64748b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
@@ -21,284 +22,290 @@
             color: var(--text);
             display: flex;
             justify-content: center;
-            padding: 20px;
-            padding-bottom: 50px;
+            padding: 20px 15px;
+            padding-bottom: 60px;
         }
 
         .container {
             width: 100%;
-            max-width: 450px;
+            max-width: 440px;
             background: var(--card);
             padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
         }
 
-        h2 { font-size: 1.25rem; margin-bottom: 20px; text-align: center; color: var(--primary); }
+        h2 { font-size: 1.2rem; margin-bottom: 24px; text-align: center; color: var(--primary); letter-spacing: -0.02em; }
 
-        .form-group { margin-bottom: 18px; }
+        .form-group { margin-bottom: 20px; }
 
-        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #64748b; }
+        label { display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; color: var(--muted); }
 
-        input[type="text"], input[type="number"], select {
+        select, input[type="text"], input[type="number"] {
             width: 100%;
-            padding: 12px;
+            padding: 12px 14px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1rem;
             outline: none;
-            background-color: #fff;
+            background-color: #fdfdfd;
+            transition: all 0.2s;
         }
 
-        input:focus, select:focus {
+        select:focus, input:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        /* Radio Button Styling */
-        .radio-group {
+        /* Status & Salutation Radio Styles */
+        .option-flex {
             display: flex;
-            gap: 15px;
-            margin-top: 5px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
-        .radio-item {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .radio-item input {
-            margin-right: 8px;
-            width: 18px;
-            height: 18px;
-        }
-
-        /* JRS Input Group */
-        .jrs-container {
-            display: flex;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .jrs-container select {
-            width: 80px;
-            border: none;
-            background: #f8fafc;
-            border-right: 1px solid var(--border);
-            border-radius: 0;
-            font-weight: 600;
-        }
-
-        .jrs-year {
-            padding: 12px;
-            background: #f8fafc;
-            color: #64748b;
-            border-right: 1px solid var(--border);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .jrs-container input {
+        .radio-card {
             flex: 1;
-            border: none;
-            border-radius: 0;
+            min-width: 100px;
+            position: relative;
         }
 
-        /* Manual Name Field Animation */
-        #manualNameContainer {
-            display: none;
-            margin-top: 10px;
-            animation: slideDown 0.3s ease-out;
+        .radio-card input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
         }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
+        .radio-label {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
             cursor: pointer;
             transition: 0.2s;
         }
 
-        .btn-generate {
+        .radio-card input:checked + .radio-label {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+            color: var(--primary);
+        }
+
+        /* JRS Input Group */
+        .jrs-group {
+            display: flex;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .jrs-group select {
+            width: 85px;
+            border: none;
+            background: #f1f5f9;
+            border-right: 1px solid var(--border);
+            border-radius: 0;
+            font-weight: 600;
+            padding: 12px 10px;
+        }
+
+        .jrs-mid {
+            background: #f1f5f9;
+            padding: 12px 10px;
+            font-weight: 500;
+            color: var(--muted);
+            border-right: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .jrs-group input { border: none; border-radius: 0; flex: 1; }
+
+        #manualNameBox { display: none; margin-top: 10px; animation: slideIn 0.3s; }
+
+        .btn-main {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
             background: var(--primary);
             color: white;
             margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
         }
 
-        .btn-generate:active { transform: scale(0.98); }
+        .btn-main:active { transform: scale(0.98); }
 
-        /* Result Box */
-        #result-section {
+        #result {
             display: none;
             margin-top: 25px;
-            border-top: 2px dashed var(--border);
             padding-top: 20px;
+            border-top: 2px dashed var(--border);
             animation: fadeIn 0.4s;
         }
 
         .output-box {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 12px;
             white-space: pre-wrap;
             font-size: 0.95rem;
             line-height: 1.5;
-            margin-bottom: 15px;
-            color: #334155;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
         }
 
         .btn-copy {
             background: #0f172a;
             color: white;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
 
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideDown { 
-            from { opacity: 0; transform: translateY(-10px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Generator Konfirmasi</h2>
+    <h2>Konfirmasi Jaringan PA</h2>
 
-    <!-- Dropdown Nama Residen -->
     <div class="form-group">
-        <label for="residenSelect">Nama Residen</label>
+        <label>Nama Residen</label>
         <select id="residenSelect" onchange="toggleManualName()">
             <option value="Taufik">Taufik</option>
-            <option value="Bukan Taufik">Bukan Taufik</option>
+            <option value="Bukan Taufik">Bukan Taufik...</option>
         </select>
-        
-        <div id="manualNameContainer">
-            <label style="margin-top: 10px;">Input Nama Manual</label>
-            <input type="text" id="manualNama" placeholder="Masukkan nama lengkap">
+        <div id="manualNameBox">
+            <input type="text" id="manualName" placeholder="Ketik nama residen...">
         </div>
     </div>
 
-    <!-- Panggilan Radio -->
+    <div class="form-group">
+        <label>Status Kenalan</label>
+        <div class="option-flex">
+            <div class="radio-card">
+                <input type="radio" name="kenalan" id="k1" value="belum" checked>
+                <label for="k1" class="radio-label">Belum Kenalan</label>
+            </div>
+            <div class="radio-card">
+                <input type="radio" name="kenalan" id="k2" value="sudah">
+                <label for="k2" class="radio-label">Sudah Kenalan</label>
+            </div>
+        </div>
+    </div>
+
     <div class="form-group">
         <label>Panggilan Penerima</label>
-        <div class="radio-group">
-            <label class="radio-item"><input type="radio" name="salutation" value="Mas" checked> Mas</label>
-            <label class="radio-item"><input type="radio" name="salutation" value="Mbak"> Mbak</label>
+        <div class="option-flex">
+            <div class="radio-card">
+                <input type="radio" name="panggilan" id="p1" value="Mas" checked>
+                <label for="p1" class="radio-label">Mas</label>
+            </div>
+            <div class="radio-card">
+                <input type="radio" name="panggilan" id="p2" value="Mbak">
+                <label for="p2" class="radio-label">Mbak</label>
+            </div>
         </div>
     </div>
 
-    <!-- ID Container -->
     <div class="form-group">
-        <label>Nomor JRS / PRS / FZ</label>
-        <div class="jrs-container">
+        <label>Kode Jaringan</label>
+        <div class="jrs-group">
             <select id="prefix">
                 <option value="JRS">JRS</option>
                 <option value="PRS">PRS</option>
                 <option value="FZ">FZ</option>
             </select>
-            <div class="jrs-year">-26-</div>
-            <input type="number" id="suffix" placeholder="100" pattern="\d*">
+            <div class="jrs-mid">-26-</div>
+            <input type="number" id="suffix" placeholder="100">
         </div>
     </div>
 
-    <button class="btn-generate" onclick="generateText()">Generate Konfirmasi Jaringan</button>
+    <button class="btn-main" onclick="generate()">Generate Text</button>
 
-    <!-- Result Area -->
-    <div id="result-section">
-        <label>Hasil Text (Siap Paste):</label>
+    <div id="result">
+        <label>Generated Text:</label>
         <div class="output-box" id="output"></div>
         <button class="btn-copy" onclick="copyText()">
-            <svg id="copyIcon" style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-            <span id="copyBtnText">Salin Text</span>
+            <span id="copyText">Salin Text</span>
         </button>
     </div>
 </div>
 
 <script>
-    // Handle visibility of manual name input
     function toggleManualName() {
-        const selectValue = document.getElementById('residenSelect').value;
-        const container = document.getElementById('manualNameContainer');
-        if (selectValue === 'Bukan Taufik') {
-            container.style.display = 'block';
-            document.getElementById('manualNama').focus();
-        } else {
-            container.style.display = 'none';
-        }
+        const val = document.getElementById('residenSelect').value;
+        document.getElementById('manualNameBox').style.display = (val === 'Bukan Taufik') ? 'block' : 'none';
     }
 
-    function getGreeting() {
-        const hour = new Date().getHours();
-        if (hour < 11) return "Selamat pagi";
-        if (hour < 15) return "Selamat siang";
-        if (hour < 18) return "Selamat sore";
-        return "Selamat malam";
-    }
-
-    function generateText() {
-        const selectValue = document.getElementById('residenSelect').value;
-        const manualNama = document.getElementById('manualNama').value.trim();
+    function generate() {
+        const selectName = document.getElementById('residenSelect').value;
+        const finalName = (selectName === 'Bukan Taufik') ? document.getElementById('manualName').value.trim() : selectName;
         const prefix = document.getElementById('prefix').value;
         const suffix = document.getElementById('suffix').value.trim();
-        const salutation = document.querySelector('input[name="salutation"]:checked').value;
-        
-        // Determine final name
-        let finalNama = selectValue;
-        if (selectValue === 'Bukan Taufik') {
-            if (!manualNama) {
-                alert("Harap masukkan nama manual");
-                return;
-            }
-            finalNama = manualNama;
-        }
+        const kenalan = document.querySelector('input[name="kenalan"]:checked').value;
+        const panggilan = document.querySelector('input[name="panggilan"]:checked').value;
 
-        if (!suffix) {
-            alert("Harap isi nomor ID");
+        if (!finalName || !suffix) {
+            alert("Harap lengkapi semua data!");
             return;
         }
 
-        const greeting = getGreeting();
-        const fullID = `${prefix}-26-${suffix}`;
+        const hour = new Date().getHours();
+        let greeting = "Selamat malam";
+        if (hour < 11) greeting = "Selamat pagi";
+        else if (hour < 15) greeting = "Selamat siang";
+        else if (hour < 18) greeting = "Selamat sore";
 
-        const template = `${greeting} ${salutation}
-Perkenalkan saya ${finalNama} dari residen PA
+        let text = "";
+        const fullCode = `${prefix}-26-${suffix}`;
+
+        if (kenalan === "belum") {
+            text = `${greeting} ${panggilan}
+Perkenalkan saya ${finalName} dari residen PA
 Izin untuk melakukan konfirmasi jaringan dengan kode
-*${fullID}*
+*${fullCode}*
 yang dikirimkan sesuai identitas dan gambaran makroskopik dibawah ini.`;
+        } else {
+            text = `${greeting} ${panggilan}, mohon maaf mengganggu waktunya.
+Izin untuk melakukan konfirmasi jaringan dengan kode
+*${fullCode}*
+yang dikirimkan sesuai identitas dan gambaran makroskopik dibawah ini.`;
+        }
 
-        document.getElementById('output').innerText = template;
-        document.getElementById('result-section').style.display = 'block';
-        
-        // Scroll to result on small screens
-        setTimeout(() => {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }, 100);
+        document.getElementById('output').innerText = text;
+        document.getElementById('result').style.display = 'block';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
     function copyText() {
         const text = document.getElementById('output').innerText;
         navigator.clipboard.writeText(text).then(() => {
             const btn = document.querySelector('.btn-copy');
-            const btnText = document.getElementById('copyBtnText');
-            
-            const originalColor = btn.style.background;
+            const label = document.getElementById('copyText');
             btn.style.background = "#059669";
-            btnText.innerText = "✓ Berhasil Disalin!";
-            
+            label.innerText = "✓ Berhasil Disalin";
             setTimeout(() => {
                 btn.style.background = "#0f172a";
-                btnText.innerText = "Salin Text";
+                label.innerText = "Salin Text";
             }, 2000);
         });
     }
